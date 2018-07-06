@@ -1,0 +1,43 @@
+<div class="container altura100vh valign-wrapper">
+	<div class="row ancho100vw">
+		<mz-card
+		class="blue-grey darken-1 white-text"
+			[hoverable]="true">
+			<mz-card-title>American 1:18 Models - Login</mz-card-title>
+			<mz-card-content>
+				<div *ngIf="!isExisteAdministrador" class="row">
+					<div class="col s12">
+						Primer ingreso, el administrador se va a guardar en la BD
+					</div>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  [icon]="'account'">
+						</i>
+						<input mz-input #inputAdministrador
+						  [label]="'Administrador'"
+						  id="administrador"
+						  type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  [icon]="'account-key'">
+						</i>
+						<input mz-input #inputPassword
+						  [label]="'Clave'"
+						  id="clave"
+						  type="password">
+					</mz-input-container>
+				</div>
+			</mz-card-content>
+			<mz-card-action>
+				<div style="text-align: center;">
+					<button mz-button (click)="loginAdministrador(inputAdministrador.value, inputPassword.value)" type="button"><i mz-icon-mdi [icon]="'login'" [align]="'left'"></i>Ingresar</button>
+				</div>
+			</mz-card-action>
+		</mz-card>
+	</div>
+</div>

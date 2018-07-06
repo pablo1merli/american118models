@@ -1,0 +1,77 @@
+<menu-admin></menu-admin>
+<div class="container">
+	<mz-card
+		class="blue-grey darken-1 white-text"
+		[hoverable]="true">
+		<mz-card-title>ABM de Textos para las p&aacute;ginas</mz-card-title>
+		<mz-card-content>
+			<div align="center">
+				<button mz-button id="altaTextoPagina" (click)="bloquearDesbloquearControles('alta')" [disabled]="inhabilitarBotonesOperaciones">Alta</button>
+				<button mz-button id="bajaTextoPagina"(click)="bloquearDesbloquearControles('baja'); obtenerValorSelect(selectTextosPagina.value)"  [disabled]="inhabilitarBotonesOperaciones">Baja</button>
+				<button mz-button id="modificacionTextoPagina" (click)="bloquearDesbloquearControles('modificacion'); obtenerValorSelect(selectTextosPagina.value)" [disabled]="inhabilitarBotonesOperaciones">Modificaci&oacute;n</button>
+			</div>
+			<hr/>
+			<br/>
+			<div class="container">
+				<div class="row">
+				<mz-select-container>
+					<i mz-icon-mdi mz-input-prefix
+					  [icon]="'animation'">
+					</i>
+					<select mz-select #selectTextosPagina (change)="obtenerValorSelect(selectTextosPagina.value)"
+						id="textosPagina"
+						[disabled]="inhabilitarSelectTextosPagina"
+						[label]="'Seleccion&aacute; el texto'"
+					>
+						<option *ngFor="let textoPagina of textosPagina" value="{{textoPagina.idioma}}{{textoPagina.tag}}">{{textoPagina.tag}} - {{textoPagina.texto}}</option>
+					</select>
+				</mz-select-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'json'">
+						</i>
+						<input mz-input #inputIdioma [(ngModel)]="textoPaginaSeleccionado.idioma"
+						  	[label]="'Idioma'"
+							[disabled]="inhabilitarInputIdioma"
+							id="idioma"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'json'">
+						</i>
+						<input mz-input #inputTag [(ngModel)]="textoPaginaSeleccionado.tag"
+						  	[label]="'Tag'"
+							[disabled]="inhabilitarInputTag"
+							id="tag"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix 
+						  [icon]="'alphabetical'">
+						</i>
+						<input mz-input #inputTexto [(ngModel)]="textoPaginaSeleccionado.texto"
+						  	[label]="'Texto'"
+							[disabled]="inhabilitarInputTexto"
+						  	id="texto"
+						  	type="text">
+					</mz-input-container>
+				</div>
+			</div>
+		</mz-card-content>
+		<mz-card-action>
+			<div style="text-align: center;">
+				<button mz-button type="button" [disabled]="!inhabilitarBotonesOperaciones" 
+					(click)="aceptarOperacion()"><i mz-icon-mdi [icon]="'check'" [align]="'left'"></i>Aceptar</button>
+				<button mz-button type="button" class="red" [disabled]="!inhabilitarBotonesOperaciones" 
+					(click)="bloquearDesbloquearControles('cancelar')"><i mz-icon-mdi [icon]="'cancel'" [align]="'left'"></i>Cancelar</button>
+			</div>
+		</mz-card-action>
+	</mz-card>
+</div>

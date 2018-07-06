@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/data/mongo https://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+	
+	<context:component-scan base-package="ar.com.american118models" />
+	<context:annotation-config />
+	
+	<!-- MONGODB -->
+	<mongo:mongo-client  host="localhost" port="27017" credentials="giacomosdr:raviolli@american118models" />
+	<mongo:db-factory dbname="american118models" />
+	
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+	
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	
+	<mongo:repositories base-package="ar.com.american118models.modelo.repositorios" mongo-template-ref="mongoTemplate"/>
+	<!-- FIN MONGODB -->
+	
+	<!-- REST -->
+	<bean id="apiListingResourceJSON" class="io.swagger.jaxrs.listing.ApiListingResource"/>
+    <bean id="apiDeclarationProvider" class="io.swagger.jaxrs.listing.SwaggerSerializers"/>
+	<bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
+		<property name="resourcePackage" value="ar.com.american118models" />
+		<property name="version" value="1.0.0" />
+		<property name="schemes" value="http" />
+		<property name="host" value="localhost:8080" />
+		<property name="basePath" value="/american118models/servicios" />
+		<property name="title" value="American118Models - API Rest" />
+		<property name="description" value="Endpoint Rest de American118Models" />
+		<property name="license" value="Ninguna" />
+		<property name="scan" value="true" />
+    </bean>
+	<!-- FIN REST -->
+</beans>

@@ -1,0 +1,20 @@
+<mz-navbar navbarClass="container">
+  	<mz-navbar-item-container [align]="'left'">
+		<mz-navbar-item><a href="#">{{textosPagina && textosPagina['menu-modelos']}}</a></mz-navbar-item>
+		<mz-navbar-item><a href="#">{{textosPagina && textosPagina['menu-chevrolet']}}</a></mz-navbar-item>
+		<mz-navbar-item><span>{{textosPagina && textosPagina['menu-busqueda']}}</span></mz-navbar-item>
+		<mz-navbar-item>
+			<mz-input-container class="col s12 header-search-wrapper">
+				<i mz-icon-mdi mz-input-prefix [icon]="'magnify'"></i>
+				<input mz-input
+					[label]="textosPagina && textosPagina['menu-busqueda-label']"				  
+					id="busqueda-input"
+				    length="50"
+				    type="search">
+			</mz-input-container>
+		</mz-navbar-item>
+	</mz-navbar-item-container>
+  	<mz-navbar-item-container [align]="'right'">
+		<mz-navbar-item><a href="#">{{textosPagina && textosPagina['menu-dinero']}}</a></mz-navbar-item>
+  	</mz-navbar-item-container>
+</mz-navbar>

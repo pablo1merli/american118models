@@ -1,0 +1,28 @@
+<mz-navbar navbarClass="container">
+  	<mz-navbar-item-container [align]="'right'">
+		<mz-navbar-item><button mz-button (click)="cerrarSesion()">Cerrar Sesi&oacute;n</button></mz-navbar-item>
+  	</mz-navbar-item-container>
+</mz-navbar>
+<mz-navbar navbarClass="container">
+  	<mz-navbar-item-container [align]="'left'">
+		<mz-navbar-item>
+			<mz-dropdown
+			  [id]="'dropdownIdiomas'"
+			  [align]="'left'"
+			  [belowOrigin]="true"
+			  [constrainWidth]="true"
+			  [dropdownButtonId]="'menuIdiomas'"
+			  [gutter]="true"
+			  [hover]="true"
+			  [inDuration]="300"
+			  [outDuration]="300"
+			  [stopPropagation]="true"
+			>
+				<mz-dropdown-item><a (click)="irAABMIdiomas()">Idiomas</a></mz-dropdown-item>
+				<mz-dropdown-divider></mz-dropdown-divider>
+			  	<mz-dropdown-item><a (click)="irAABMTextosPagina()">Textos de p&aacute;ginas</a></mz-dropdown-item>
+			</mz-dropdown>
+			<button mz-button id="menuIdiomas">Configuraci&oacute;n del sitio</button>
+		</mz-navbar-item>
+	</mz-navbar-item-container>
+</mz-navbar>

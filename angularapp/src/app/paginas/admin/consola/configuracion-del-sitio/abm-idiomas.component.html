@@ -1,0 +1,65 @@
+<menu-admin></menu-admin>
+<div class="container">
+	<mz-card
+		class="blue-grey darken-1 white-text"
+		[hoverable]="true">
+		<mz-card-title>ABM de Idiomas</mz-card-title>
+		<mz-card-content>
+			<div align="center">
+				<button mz-button id="altaIdioma" (click)="bloquearDesbloquearControles('alta')" [disabled]="inhabilitarBotonesOperaciones">Alta</button>
+				<button mz-button id="bajaIdioma"(click)="bloquearDesbloquearControles('baja'); obtenerValorSelect(selectIdiomas.value)"  [disabled]="inhabilitarBotonesOperaciones">Baja</button>
+				<button mz-button id="modificacionIdioma" (click)="bloquearDesbloquearControles('modificacion'); obtenerValorSelect(selectIdiomas.value)" [disabled]="inhabilitarBotonesOperaciones">Modificaci&oacute;n</button>
+			</div>
+			<hr/>
+			<br/>
+			<div class="container">
+				<div class="row">
+				<mz-select-container>
+					<i mz-icon-mdi mz-input-prefix
+					  [icon]="'animation'">
+					</i>
+					<select mz-select #selectIdiomas (change)="obtenerValorSelect(selectIdiomas.value)"
+						id="idiomas"
+						[disabled]="inhabilitarSelectIdioma"
+						[label]="'Seleccion&aacute; idioma'"
+					>
+						<option *ngFor="let idioma of idiomas" value="{{idioma.abreviatura}}">{{idioma.nombre}}</option>
+					</select>
+				</mz-select-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'json'">
+						</i>
+						<input mz-input #inputAbreviatura [(ngModel)]="idiomaSeleccionado.abreviatura"
+						  	[label]="'Abreviatura'"
+							[disabled]="inhabilitarInputAbreviatura"
+							id="abreviatura"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix 
+						  [icon]="'alphabetical'">
+						</i>
+						<input mz-input #inputNombre [(ngModel)]="idiomaSeleccionado.nombre"
+						  	[label]="'Nombre'"
+							[disabled]="inhabilitarInputNombre"
+						  	id="nombre"
+						  	type="text">
+					</mz-input-container>
+				</div>
+			</div>
+		</mz-card-content>
+		<mz-card-action>
+			<div style="text-align: center;">
+				<button mz-button type="button" [disabled]="!inhabilitarBotonesOperaciones" 
+					(click)="aceptarOperacion()"><i mz-icon-mdi [icon]="'check'" [align]="'left'"></i>Aceptar</button>
+				<button mz-button type="button" class="red" [disabled]="!inhabilitarBotonesOperaciones" 
+					(click)="bloquearDesbloquearControles('cancelar')"><i mz-icon-mdi [icon]="'cancel'" [align]="'left'"></i>Cancelar</button>
+			</div>
+		</mz-card-action>
+	</mz-card>
+</div>

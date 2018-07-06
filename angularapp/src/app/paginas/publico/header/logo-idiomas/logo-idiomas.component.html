@@ -1,0 +1,7 @@
+<mz-navbar navbarClass="container">
+	<a href="#" class="brand-logo">American 1:18 Models</a>
+  	<mz-navbar-item-container [align]="'right'">
+  		<mz-navbar-item><span>{{textosPagina && textosPagina['seleccionar-idioma']}}</span></mz-navbar-item>
+	    <mz-navbar-item *ngFor="let idioma of idiomas"><button mz-button (click)="cambiarIdioma(idioma)">{{idioma.nombre}}</button></mz-navbar-item>
+  	</mz-navbar-item-container>
+</mz-navbar>
