@@ -13,7 +13,7 @@ const httpOptions = {
 @Injectable()
 export class IdiomasService
 {
-    private idiomasApi = 'http://localhost:8080/american118models/servicios/rest/idioma';
+    private idiomasApi = 'http://wildfly-american118models.a3c1.starter-us-west-1.openshiftapps.com/american118models/servicios/rest/idioma';
     
     constructor(private http: HttpClient)
     { 
