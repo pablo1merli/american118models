@@ -12,7 +12,7 @@
 	<context:annotation-config />
 	
 	<!-- MONGODB -->
-	<mongo:mongo-client id="mongoClient" host="172.30.2.197" port="27017" credentials="giacomosdr:raviolli@american118models" />
+	<mongo:mongo-client id="mongoClient" host="172.30.173.115" port="27017" credentials="giacomosdr:raviolli@american118models" />
 	<mongo:db-factory dbname="american118models" mongo-ref="mongoClient" />
 	
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
