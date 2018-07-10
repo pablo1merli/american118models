@@ -240,6 +240,16 @@
 		<profile>
 			<id>desa</id>
 			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.properties</include>
+							<include>**/*.xml</include>
+						</includes>
+					</resource>
+				</resources>
 				<filters>
 					<filter>change.properties.desa</filter>
 				</filters>
@@ -251,6 +261,16 @@
 	            <activeByDefault>true</activeByDefault>
 	        </activation>
 			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.properties</include>
+							<include>**/*.xml</include>
+						</includes>
+					</resource>
+				</resources>
 				<filters>
 					<filter>change.properties.prod</filter>
 				</filters>
