@@ -14,7 +14,7 @@ const httpOptions = {
 @Injectable()
 export class AdministradorService
 {
-    private administradorApi = 'http://localhost:8080/american118models/servicios/rest/administrador';
+    private administradorApi = 'http://${angular.url.ambiente}/american118models/servicios/rest/administrador';
     
     constructor(private http: HttpClient) { }
 
