@@ -1,0 +1,285 @@
+<menu-admin></menu-admin>
+<div class="container">
+	<mz-card
+		class="blue-grey darken-1 white-text"
+		[hoverable]="true">
+		<mz-card-title>ABM de Autos</mz-card-title>
+		<mz-card-content>
+			<div align="center">
+				<button mz-button id="altaAuto" (click)="bloquearDesbloquearControles('alta')" [disabled]="inhabilitarBotonesOperaciones">Alta</button>
+				<button mz-button id="bajaAuto"(click)="bloquearDesbloquearControles('baja'); obtenerValorSelect(selectAuto.value)"  [disabled]="inhabilitarBotonesOperaciones">Baja</button>
+				<button mz-button id="modificacionAuto" (click)="bloquearDesbloquearControles('modificacion'); obtenerValorSelect(selectAuto.value)" [disabled]="inhabilitarBotonesOperaciones">Modificaci&oacute;n</button>
+			</div>
+			<hr/>
+			<br/>
+			<div class="container">
+				<div class="row">
+				<mz-select-container>
+					<i mz-icon-mdi mz-input-prefix
+					  [icon]="'car'">
+					</i>
+					<select mz-select #selectAuto (change)="obtenerValorSelect(selectAuto.value)"
+						id="autos"
+						[disabled]="inhabilitarSelectAuto"
+						[label]="'Seleccion&aacute; el auto'"
+					>
+						<option *ngFor="let auto of autos" value="{{auto.datosAuto.anio}}{{auto.datosAuto.marca}}{{auto.datosAuto.modelo}}{{auto.datosAuto.motor}}" [selected]="auto.urlRest == urlRest"
+							>{{auto.datosAuto.anio}} {{auto.datosAuto.marca}} {{auto.datosAuto.modelo}} {{auto.datosAuto.motor}}</option>
+					</select>
+				</mz-select-container>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<hr>
+						Datos de auto real
+					</div>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'calendar'">
+						</i>
+						<input mz-input #inputAnioAuto [(ngModel)]="autoSeleccionado.datosAuto.anio"
+						  	[label]="'A&ntilde;o'"
+							[disabled]="inhabilitarInputAuto"
+							id="anioAuto"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'factory'">
+						</i>
+						<input mz-input #inputMarca [(ngModel)]="autoSeleccionado.datosAuto.marca"
+						  	[label]="'Marca'"
+							[disabled]="inhabilitarInputAuto"
+							id="marca"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'car-side'">
+						</i>
+						<input mz-input #inputModelo [(ngModel)]="autoSeleccionado.datosAuto.modelo"
+						  	[label]="'Modelo'"
+							[disabled]="inhabilitarInputAuto"
+							id="modelo"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'engine'">
+						</i>
+						<input mz-input #inputMotor [(ngModel)]="autoSeleccionado.datosAuto.motor"
+						  	[label]="'Motor'"
+							[disabled]="inhabilitarInputAuto"
+							id="motor"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'palette'">
+						</i>
+						<input mz-input #inputColor [(ngModel)]="autoSeleccionado.datosAuto.color"
+						  	[label]="'Color'"
+							[disabled]="inhabilitarInputAuto"
+							id="color"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'file-powerpoint-box'">
+						</i>
+						<input mz-input #inputPotencia [(ngModel)]="autoSeleccionado.datosAuto.potencia"
+						  	[label]="'Potencia'"
+							[disabled]="inhabilitarInputAuto"
+							id="potencia"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'sort-descending'">
+						</i>
+						<input mz-input #inputOrdenamiento [(ngModel)]="autoSeleccionado.datosAuto.ordenamiento"
+						  	[label]="'Ordenamiento'"
+							[disabled]="inhabilitarInputAuto"
+							id="ordenamiento"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<hr>
+						Datos del modelo
+					</div>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'cogs'">
+						</i>
+						<input mz-input #inputFabricante [(ngModel)]="autoSeleccionado.fabricante"
+						  	[label]="'Fabricante'"
+							[disabled]="inhabilitarInputAuto"
+							id="fabricante"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'alert-octagram'">
+						</i>
+						<input mz-input #inputSerie [(ngModel)]="autoSeleccionado.serie"
+						  	[label]="'Serie'"
+							[disabled]="inhabilitarInputAuto"
+							id="serie"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'numeric'">
+						</i>
+						<input mz-input #inputCantidadProducida [(ngModel)]="autoSeleccionado.cantidadProducida"
+						  	[label]="'Cantidad Producida'"
+							[disabled]="inhabilitarInputAuto"
+							id="cantidadProducida"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'star'">
+						</i>
+						<input mz-input #inputEdicionEspecial [(ngModel)]="autoSeleccionado.edicionEspecial"
+						  	[label]="'Edici&oacute;n Especial'"
+							[disabled]="inhabilitarInputAuto"
+							id="edicionEspecial"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'calendar-clock'">
+						</i>
+						<input mz-input #inputAnioFabricacion [(ngModel)]="autoSeleccionado.anioFabricacion"
+						  	[label]="'A&ntilde;o de fabricaci&oacute;n'"
+							[disabled]="inhabilitarInputAuto"
+							id="anioFabricacion"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-input-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'search-web'">
+						</i>
+						<input mz-input #inputUrlRest [(ngModel)]="autoSeleccionado.urlRest"
+						  	[label]="'URL Rest'"
+							[disabled]="inhabilitarInputAuto"
+							id="urlRest"
+							type="text">
+					</mz-input-container>
+				</div>
+				<div class="row">
+					<mz-checkbox-container class="col s12">
+						<i mz-icon-mdi mz-input-prefix
+						  	[icon]="'file-question'">
+						</i>
+  						<input mz-checkbox #inputLoTengo [(ngModel)]="autoSeleccionado.loTengo"
+	    					[label]="'Lo Tengo'"
+	    					[disabled]="inhabilitarInputAuto"
+	    					[filledIn]=true
+	    					id="loTengo"
+	    					type="checkbox">
+					</mz-checkbox-container>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<hr class="dashed">
+						Fotos
+						<span *ngIf="(operacionSeleccionada == 'alta') || (operacionSeleccionada == 'modificacion')">
+							<button mz-button (click)="agregarFoto()"><i mz-icon-mdi [icon]="'image-plus'" [align]="'left'"></i>Nueva Foto</button>
+						</span>
+					</div>
+				</div>
+				<div class="row" *ngFor="let urlFoto of autoSeleccionado.urlFotos; index as i">
+					<div class="col s12">
+						<div class="row">
+							<mz-input-container class="col s12">
+								<i mz-icon-mdi mz-input-prefix
+								  	[icon]="'image'">
+								</i>
+								<input mz-input #inputURLFoto [(ngModel)]="autoSeleccionado.urlFotos[i]"
+								  	[label]="['URL Foto ' + i]"
+									[disabled]="inhabilitarInputAuto"
+									id="urlFoto{{i}}"
+									type="text">
+							</mz-input-container>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<hr class="dashed">
+						Reviews
+						<span *ngIf="(operacionSeleccionada == 'alta') || (operacionSeleccionada == 'modificacion')">
+							<button mz-button (click)="agregarReview()"><i mz-icon-mdi [icon]="'book-plus'" [align]="'left'"></i>Nuevo Review</button>
+						</span>
+					</div>
+				</div>
+				<div class="row" *ngFor="let review of autoSeleccionado.reviews; index as i">
+					<div class="col s12">
+						<div class="row">
+							<mz-input-container class="col s12">
+								<i mz-icon-mdi mz-input-prefix
+								  	[icon]="'web'">
+								</i>
+								<input mz-input #inputIdioma [(ngModel)]="review.idioma"
+								  	[label]="['Idioma ' + i]"
+									[disabled]="inhabilitarInputAuto"
+									id="idioma{{i}}"
+									type="text">
+							</mz-input-container>
+						</div>
+						<div class="row">
+							<mz-input-container class="col s12">
+								<i mz-icon-mdi mz-input-prefix 
+								  [icon]="'alphabetical'">
+								</i>
+								<input mz-input #inputReview [(ngModel)]="review.review"
+								  	[label]="['Review ' + i]"
+									[disabled]="inhabilitarInputAuto"
+								  	id="review{{i}}"
+								  	type="text">
+							</mz-input-container>
+						</div>
+					</div>
+				</div>
+			</div>
+		</mz-card-content>
+		<mz-card-action>
+			<div style="text-align: center;">
+				<button mz-button type="button" [disabled]="!inhabilitarBotonesOperaciones" 
+					(click)="aceptarOperacion()"><i mz-icon-mdi [icon]="'check'" [align]="'left'"></i>Aceptar</button>
+				<button mz-button type="button" class="red" [disabled]="!inhabilitarBotonesOperaciones" 
+					(click)="bloquearDesbloquearControles('cancelar')"><i mz-icon-mdi [icon]="'cancel'" [align]="'left'"></i>Cancelar</button>
+			</div>
+		</mz-card-action>
+	</mz-card>
+</div>

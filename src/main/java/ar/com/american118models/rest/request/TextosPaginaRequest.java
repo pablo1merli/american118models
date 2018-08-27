@@ -1,5 +1,7 @@
 package ar.com.american118models.rest.request;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -16,6 +18,8 @@ public class TextosPaginaRequest
 	private String pagina;
 	@XmlElement
 	private String idioma;
+	@XmlElement
+	private List<TextoPaginaRequest> textosPagina;
 	@XmlElement
 	private String token;
 
@@ -37,6 +41,16 @@ public class TextosPaginaRequest
 	public void setIdioma(String idioma)
 	{
 		this.idioma = idioma;
+	}
+	
+	public List<TextoPaginaRequest> getTextosPagina()
+	{
+		return textosPagina;
+	}
+
+	public void setTextosPagina(List<TextoPaginaRequest> textosPagina)
+	{
+		this.textosPagina = textosPagina;
 	}
 
 	public String getToken()

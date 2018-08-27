@@ -18,6 +18,11 @@ export class MenuAdminComponent
         this.administradorService.logoutAdministrador().subscribe(respuesta => this.analizarLogout(respuesta));
     }
 
+    irAABMAutos()
+    {
+        this.router.navigate( ['/abmAutos/default'] );
+    }
+
     irAABMIdiomas()
     {
         this.router.navigate( ['/abmIdiomas'] );
@@ -28,6 +33,11 @@ export class MenuAdminComponent
         this.router.navigate( ['/abmTextosPagina'] );
     }
     
+    irAListadoCompleto()
+    {
+        this.router.navigate( ['/listado'] );
+    }
+
     private analizarLogout(logoutExitoso: boolean)
     {
         if (logoutExitoso)

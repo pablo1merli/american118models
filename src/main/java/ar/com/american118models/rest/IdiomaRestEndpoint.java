@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import ar.com.american118models.mapping.ObjectMapping;
 import ar.com.american118models.modelo.entidades.idiomas.Idioma;
 import ar.com.american118models.modelo.servicios.AdministradorService;
 import ar.com.american118models.modelo.servicios.IdiomaService;
@@ -36,6 +37,8 @@ public class IdiomaRestEndpoint
 	IdiomaService idiomaService;
 	@Autowired
 	AdministradorService administradorService;
+	@Autowired
+	ObjectMapping mapping;
 
 	@SuppressWarnings("unchecked")
 	@POST
@@ -72,9 +75,7 @@ public class IdiomaRestEndpoint
 			List<Idioma> idiomas = idiomaService.getIdiomas();
 			for (Idioma idioma : idiomas)
 			{
-				IdiomaResponse idiomaResponse = new IdiomaResponse();
-				idiomaResponse.setAbreviatura(idioma.getAbreviatura());
-				idiomaResponse.setNombre(idioma.getNombre());
+				IdiomaResponse idiomaResponse = (IdiomaResponse) mapping.convertir(idioma, IdiomaResponse.class);
 				response.add(idiomaResponse);
 			}
 			
@@ -108,9 +109,7 @@ public class IdiomaRestEndpoint
 			// Controlo que sea el administrador autenticado
 			if (administradorService.controlarAdministradorAutenticadoDesdeToken(idiomaRequest.getToken()))
 			{
-				Idioma idioma = new Idioma();
-				idioma.setAbreviatura(idiomaRequest.getAbreviatura());
-				idioma.setNombre(idiomaRequest.getNombre());
+				Idioma idioma = (Idioma) mapping.convertir(idiomaRequest, Idioma.class);
 				
 				response = idiomaService.altaIdioma(idioma);
 			}
@@ -142,9 +141,7 @@ public class IdiomaRestEndpoint
 			// Controlo que sea el administrador autenticado
 			if (administradorService.controlarAdministradorAutenticadoDesdeToken(idiomaRequest.getToken()))
 			{
-				Idioma idioma = new Idioma();
-				idioma.setAbreviatura(idiomaRequest.getAbreviatura());
-				idioma.setNombre(idiomaRequest.getNombre());
+				Idioma idioma = (Idioma) mapping.convertir(idiomaRequest, Idioma.class);
 				
 				response = idiomaService.bajaIdioma(idioma);
 			}
@@ -176,9 +173,7 @@ public class IdiomaRestEndpoint
 			// Controlo que sea el administrador autenticado
 			if (administradorService.controlarAdministradorAutenticadoDesdeToken(idiomaRequest.getToken()))
 			{
-				Idioma idioma = new Idioma();
-				idioma.setAbreviatura(idiomaRequest.getAbreviatura());
-				idioma.setNombre(idiomaRequest.getNombre());
+				Idioma idioma = (Idioma) mapping.convertir(idiomaRequest, Idioma.class);
 				
 				response = idiomaService.modificarIdioma(idioma);
 			}

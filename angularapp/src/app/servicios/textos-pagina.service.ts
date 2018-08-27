@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { TextoPagina } from './../entidades/texto-pagina';
+import { TextosPagina } from './../entidades/textos-pagina';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,52 +17,52 @@ export class TextosPaginaService
     
     constructor(private http: HttpClient) { }
 
-    getTextosPagina(): Observable<TextoPagina[]> 
+    getTextosPagina(): Observable<TextosPagina[]> 
     {
-        return this.http.post<TextoPagina[]>(this.textosPaginaApi + "/getTextosPagina", JSON.stringify({}), httpOptions).pipe(
-            catchError(this.manejoDeErrores<TextoPagina[]>('getTextosPagina')));    
+        return this.http.post<TextosPagina[]>(this.textosPaginaApi + "/getTextosPagina", JSON.stringify({}), httpOptions).pipe(
+            catchError(this.manejoDeErrores<TextosPagina[]>('getTextosPagina')));    
     }
     
     getTextosDeLaPaginaSegunIdioma(pagina: string, idioma: string): Observable<Object> 
     {
-        return this.http.post<TextoPagina[]>(this.textosPaginaApi + "/getTextosDePaginaSegunIdioma", JSON.stringify({pagina: pagina, idioma: idioma}), httpOptions).pipe(
+        return this.http.post<TextosPagina>(this.textosPaginaApi + "/getTextosDePaginaSegunIdioma", JSON.stringify({pagina: pagina, idioma: idioma}), httpOptions).pipe(
             map(respuesta => this.convertirArrayEnObject(respuesta)),
-            catchError(this.manejoDeErrores<TextoPagina[]>('getTextosDeLaPaginaSegunIdioma')));    
+            catchError(this.manejoDeErrores<TextosPagina>('getTextosDeLaPaginaSegunIdioma')));    
     }
     
-    altaTextoPagina(textoPagina: TextoPagina): Observable<boolean>
+    altaTextoPagina(textoPagina: TextosPagina): Observable<boolean>
     {
         let token = JSON.parse(localStorage.getItem('administrador'));
         textoPagina.token = token;
         
-        return this.http.post<boolean>(this.textosPaginaApi + "/altaTextoPagina", JSON.stringify(textoPagina), httpOptions).pipe(
-            catchError(this.manejoDeErrores<boolean>('altaTextoPagina')));    
+        return this.http.post<boolean>(this.textosPaginaApi + "/altaTextosPagina", JSON.stringify(textoPagina), httpOptions).pipe(
+            catchError(this.manejoDeErrores<boolean>('altaTextosPagina')));    
         
     }
 
-    bajaTextoPagina(textoPagina: TextoPagina): Observable<boolean> 
+    bajaTextoPagina(textoPagina: TextosPagina): Observable<boolean> 
     {
         let token = JSON.parse(localStorage.getItem('administrador'));
         textoPagina.token = token;
         
-        return this.http.post<boolean>(this.textosPaginaApi + "/bajaTextoPagina", JSON.stringify(textoPagina), httpOptions).pipe(
-            catchError(this.manejoDeErrores<boolean>('bajaTextoPagina')));   
+        return this.http.post<boolean>(this.textosPaginaApi + "/bajaTextosPagina", JSON.stringify(textoPagina), httpOptions).pipe(
+            catchError(this.manejoDeErrores<boolean>('bajaTextosPagina')));   
     }
 
-    modificarTextoPagina(textoPagina: TextoPagina): Observable<boolean>
+    modificarTextoPagina(textoPagina: TextosPagina): Observable<boolean>
     {
         let token = JSON.parse(localStorage.getItem('administrador'));
         textoPagina.token = token;
         
-        return this.http.post<boolean>(this.textosPaginaApi + "/modificarTextoPagina", JSON.stringify(textoPagina), httpOptions).pipe(
-            catchError(this.manejoDeErrores<boolean>('modificarTextoPagina')));   
+        return this.http.post<boolean>(this.textosPaginaApi + "/modificarTextosPagina", JSON.stringify(textoPagina), httpOptions).pipe(
+            catchError(this.manejoDeErrores<boolean>('modificarTextosPagina')));   
     }
     
-    private convertirArrayEnObject(textosPagina: TextoPagina[]): Object
+    private convertirArrayEnObject(textosPagina: TextosPagina): Object
     {
         let textosPaginaObject = {};
         
-        for (let textoPagina of textosPagina)
+        for (let textoPagina of textosPagina.textosPagina)
         {
             textosPaginaObject[textoPagina.tag] = textoPagina.texto;
         }

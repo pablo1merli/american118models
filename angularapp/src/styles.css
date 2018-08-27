@@ -21,6 +21,32 @@ nav ul mz-input-container .input-field label.active:not(.label-icon)
 	transform: translateY(-40%);
 }
 
+.altura100vh
+{
+	height: 100vh;
+}
+
+.ancho100vw
+{
+	width: 100vw;
+}
+
+.menu-background
+{
+    background-color: #1565c0;
+}
+
+.custom-container 
+{
+    margin: 0 auto;
+    width: 90%;
+}
+
+.dashed
+{
+	border: 1px dashed;
+}
+
 .header-search-wrapper 
 {
 	width: 100%;
@@ -30,12 +56,7 @@ nav ul mz-input-container .input-field label.active:not(.label-icon)
 	background-color: rgba(64, 64, 64, .1);
 }
 
-.altura100vh
+.pointer 
 {
-	height: 100vh;
-}
-
-.ancho100vw
-{
-	width: 100vw;
+	cursor: pointer;
 }

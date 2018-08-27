@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { TextoPagina } from './../../../../entidades/texto-pagina';
+import { TextosPagina } from './../../../../entidades/textos-pagina';
 import { TextosPaginaService } from './../../../../servicios/textos-pagina.service';
 
 @Component( {
@@ -9,12 +10,13 @@ import { TextosPaginaService } from './../../../../servicios/textos-pagina.servi
 } )
 export class ABMTextosPaginaComponent 
 {
-    textosPagina: TextoPagina[] = [];
-    textoPaginaSeleccionado: TextoPagina = new TextoPagina();
+    textosPagina: TextosPagina[] = [];
+    textosPaginaSeleccionado: TextosPagina = new TextosPagina();
 
     inhabilitarBotonesOperaciones: boolean;
     inhabilitarSelectTextosPagina: boolean;
     inhabilitarInputIdioma: boolean;
+    inhabilitarInputPagina: boolean;
     inhabilitarInputTag: boolean;
     inhabilitarInputTexto: boolean;
     operacionSeleccionada: string;
@@ -30,27 +32,54 @@ export class ABMTextosPaginaComponent
         switch (this.operacionSeleccionada)
         {
             case "alta": 
-            { 
-                if (this.textoPaginaSeleccionado.tag === "" || this.textoPaginaSeleccionado.texto === "")
+            {
+                let cantidadTagTextoVacios = 0;
+                for (let i = 0; i < this.textosPaginaSeleccionado.textosPagina.length && cantidadTagTextoVacios == 0; i++)
+                {
+                    if (this.textosPaginaSeleccionado.textosPagina[i].tag === undefined || this.textosPaginaSeleccionado.textosPagina[i].tag.trim() === "" || 
+                        this.textosPaginaSeleccionado.textosPagina[i].texto === undefined || this.textosPaginaSeleccionado.textosPagina[i].texto.trim() === "")
+                    {
+                        cantidadTagTextoVacios++;
+                    }
+                }
+                    
+                if (this.textosPaginaSeleccionado.idioma.trim() === "" || this.textosPaginaSeleccionado.pagina.trim() === "" || cantidadTagTextoVacios > 0)
                 {
                     window.alert("Llena bien los campos, gil");
                 }
                 else
                 {
-                    this.textosPaginaService.altaTextoPagina(this.textoPaginaSeleccionado).subscribe(resp => this.inicializarFormulario(resp));
+                    this.textosPaginaService.altaTextoPagina(this.textosPaginaSeleccionado).subscribe(resp => this.inicializarFormulario(resp));
                 }
                 
                 break; 
             } 
             case "baja": 
             { 
-                this.textosPaginaService.bajaTextoPagina(this.textoPaginaSeleccionado).subscribe(resp => this.inicializarFormulario(resp));
+                this.textosPaginaService.bajaTextoPagina(this.textosPaginaSeleccionado).subscribe(resp => this.inicializarFormulario(resp));
 
                 break; 
             }
             case "modificacion": 
             { 
-                this.textosPaginaService.modificarTextoPagina(this.textoPaginaSeleccionado).subscribe(resp => this.inicializarFormulario(resp));
+                let cantidadTagTextoVacios = 0;
+                for (let i = 0; i < this.textosPaginaSeleccionado.textosPagina.length && cantidadTagTextoVacios == 0; i++)
+                {
+                    if (this.textosPaginaSeleccionado.textosPagina[i].tag === undefined || this.textosPaginaSeleccionado.textosPagina[i].tag.trim() === "" || 
+                        this.textosPaginaSeleccionado.textosPagina[i].texto === undefined || this.textosPaginaSeleccionado.textosPagina[i].texto.trim() === "")
+                    {
+                        cantidadTagTextoVacios++;
+                    }
+                }
+                    
+                if (this.textosPaginaSeleccionado.idioma.trim() === "" || this.textosPaginaSeleccionado.pagina.trim() === "" || cantidadTagTextoVacios > 0)
+                {
+                    window.alert("Llena bien los campos, gil");
+                }
+                else 
+                {
+                    this.textosPaginaService.modificarTextoPagina(this.textosPaginaSeleccionado).subscribe(resp => this.inicializarFormulario(resp));
+                }
                 
                 break; 
             }
@@ -73,11 +102,12 @@ export class ABMTextosPaginaComponent
             { 
                 this.inhabilitarBotonesOperaciones = true;
                 this.inhabilitarInputIdioma = false;
+                this.inhabilitarInputPagina = false;
                 this.inhabilitarInputTag = false;
                 this.inhabilitarInputTexto = false;
-                this.textoPaginaSeleccionado.idioma = "";
-                this.textoPaginaSeleccionado.tag = "";
-                this.textoPaginaSeleccionado.texto = "";
+                this.textosPaginaSeleccionado.idioma = "";
+                this.textosPaginaSeleccionado.pagina = "";
+                this.agregarTag();
                 
                 break; 
             } 
@@ -92,7 +122,6 @@ export class ABMTextosPaginaComponent
             { 
                 this.inhabilitarBotonesOperaciones = true;
                 this.inhabilitarSelectTextosPagina = false;
-                this.inhabilitarInputIdioma = false;
                 this.inhabilitarInputTag = false;
                 this.inhabilitarInputTexto = false;
                 
@@ -111,12 +140,17 @@ export class ABMTextosPaginaComponent
     {
         for (let i = 0; i < this.textosPagina.length; i++)
         {
-            if (tag === (this.textosPagina[i].idioma + this.textosPagina[i].tag))
+            if (tag === (this.textosPagina[i].pagina + this.textosPagina[i].idioma))
             {
-                this.textoPaginaSeleccionado = this.textosPagina[i];
+                this.textosPaginaSeleccionado = this.textosPagina[i];
                 break;
             }
         }
+    }
+  
+    agregarTag()
+    {
+        this.textosPaginaSeleccionado.textosPagina.push(new TextoPagina());
     }
     
     private inicializarFormulario(respuesta: boolean)
@@ -125,12 +159,23 @@ export class ABMTextosPaginaComponent
         {
             this.textosPaginaService.getTextosPagina().subscribe(textosPagina => this.textosPagina = textosPagina);
 
-            this.textoPaginaSeleccionado.idioma = "";
-            this.textoPaginaSeleccionado.tag = "";
-            this.textoPaginaSeleccionado.texto = "";
+            if (this.textosPaginaSeleccionado.textosPagina == null)
+            {
+                  this.textosPaginaSeleccionado.textosPagina = [];  
+            }
+            else
+            {
+                while (this.textosPaginaSeleccionado.textosPagina.length > 0)
+                {
+                    this.textosPaginaSeleccionado.textosPagina.pop();
+                }
+            }
+            this.textosPaginaSeleccionado.idioma = "";
+            this.textosPaginaSeleccionado.pagina = "";
             this.inhabilitarBotonesOperaciones = false;
             this.inhabilitarSelectTextosPagina = true;
             this.inhabilitarInputIdioma = true;
+            this.inhabilitarInputPagina = true;
             this.inhabilitarInputTag = true;
             this.inhabilitarInputTexto = true;
             

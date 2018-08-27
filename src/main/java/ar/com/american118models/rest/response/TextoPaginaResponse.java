@@ -13,8 +13,6 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class TextoPaginaResponse
 {
 	@XmlElement
-	private String idioma;
-	@XmlElement
 	private String tag;
 	@XmlElement
 	private String texto;
@@ -38,15 +36,4 @@ public class TextoPaginaResponse
 	{
 		this.texto = texto;
 	}
-
-	public String getIdioma() 
-	{
-		return idioma;
-	}
-
-	public void setIdioma(String idioma) 
-	{
-		this.idioma = idioma;
-	}
-	
 }

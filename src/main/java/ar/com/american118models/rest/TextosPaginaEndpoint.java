@@ -14,13 +14,13 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import ar.com.american118models.modelo.entidades.paginas.TextoPagina;
+import ar.com.american118models.mapping.ObjectMapping;
 import ar.com.american118models.modelo.entidades.paginas.TextosPagina;
 import ar.com.american118models.modelo.servicios.AdministradorService;
 import ar.com.american118models.modelo.servicios.TextosPaginaService;
 import ar.com.american118models.rest.request.TextosPaginaRequest;
 import ar.com.american118models.rest.response.ErrorResponse;
-import ar.com.american118models.rest.response.TextoPaginaResponse;
+import ar.com.american118models.rest.response.TextosPaginaResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -36,6 +36,8 @@ public class TextosPaginaEndpoint
 	TextosPaginaService textosPaginaService;
 	@Autowired
 	AdministradorService administradorService;
+	@Autowired
+	ObjectMapping mapping;
 
 	@SuppressWarnings("unchecked")
 	@POST
@@ -60,26 +62,21 @@ public class TextosPaginaEndpoint
 	@ApiResponses(value =
 	{ @ApiResponse(code = 200, message = "OK", response = Object.class),
 			@ApiResponse(code = 500, message = "Error", response = ErrorResponse.class) })
-	public Response getTextosPagina(TextosPaginaRequest textosPaginaResponse) throws Exception
+	public Response getTextosPagina(TextosPaginaRequest textosPaginaRequest) throws Exception
 	{
-		List<TextoPaginaResponse> response;
+		List<TextosPaginaResponse> response;
 
 		try
 		{
-			response = new ArrayList<TextoPaginaResponse>();
+			response = new ArrayList<TextosPaginaResponse>();
 
 			// Obtengo todos los textos
 			List<TextosPagina> listaTextosPagina = textosPaginaService.getTextosPagina();
 			for (TextosPagina textosPagina : listaTextosPagina)
 			{
-				for (TextoPagina textoPagina : textosPagina.getTextosPagina())
-				{
-					TextoPaginaResponse textoPaginaResponse = new TextoPaginaResponse();
-					textoPaginaResponse.setIdioma(textosPagina.getIdioma());
-					textoPaginaResponse.setTag(textoPagina.getTag());
-					textoPaginaResponse.setTexto(textoPagina.getTexto());
-					response.add(textoPaginaResponse);
-				}
+				TextosPaginaResponse textosPaginaResponse = (TextosPaginaResponse) mapping.convertir(textosPagina, TextosPaginaResponse.class);
+				
+				response.add(textosPaginaResponse);
 			}
 			
 		}
@@ -101,25 +98,18 @@ public class TextosPaginaEndpoint
 	@ApiResponses(value =
 	{ @ApiResponse(code = 200, message = "OK", response = Object.class),
 			@ApiResponse(code = 500, message = "Error", response = ErrorResponse.class) })
-	public Response getTextosDePaginaSegunIdioma(TextosPaginaRequest textosPaginaResponse) throws Exception
+	public Response getTextosDePaginaSegunIdioma(TextosPaginaRequest textosPaginaRequest) throws Exception
 	{
-		List<TextoPaginaResponse> response;
+		TextosPaginaResponse response;
 
 		try
 		{
-			response = new ArrayList<TextoPaginaResponse>();
+			response = new TextosPaginaResponse();
 
 			// Obtengo los textos de la pagina pasada como parametro, correspondientes al idioma seleccionado
-			TextosPagina textosPagina = textosPaginaService.getTextosPaginaPorIdioma(textosPaginaResponse.getPagina(), textosPaginaResponse.getIdioma());
-			for (TextoPagina textoPagina : textosPagina.getTextosPagina())
-			{
-				TextoPaginaResponse textoPaginaResponse = new TextoPaginaResponse();
-				textoPaginaResponse.setIdioma(textosPagina.getIdioma());
-				textoPaginaResponse.setTag(textoPagina.getTag());
-				textoPaginaResponse.setTexto(textoPagina.getTexto());
-				response.add(textoPaginaResponse);
-			}
+			TextosPagina textosPagina = textosPaginaService.getTextosPaginaPorIdioma(textosPaginaRequest.getPagina(), textosPaginaRequest.getIdioma());
 			
+			response = (TextosPaginaResponse) mapping.convertir(textosPagina, TextosPaginaResponse.class);
 		}
 		catch (Exception ex)
 		{
@@ -131,4 +121,99 @@ public class TextosPaginaEndpoint
 		return Response.status(Response.Status.OK.getStatusCode()).entity(response).type("application/json").build();
 	}
 
+	@POST
+	@Path("/altaTextosPagina")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Alta de los textos de las paginas", notes = "Alta de los textos de las paginas.")
+	@ApiResponses(value =
+	{ @ApiResponse(code = 200, message = "OK", response = Object.class),
+			@ApiResponse(code = 500, message = "Error", response = ErrorResponse.class) })
+	public Response altaTextosPagina(TextosPaginaRequest textosPaginaRequest) throws Exception
+	{
+		boolean response = false;
+
+		try
+		{
+			// Controlo que sea el administrador autenticado
+			if (administradorService.controlarAdministradorAutenticadoDesdeToken(textosPaginaRequest.getToken()))
+			{
+				TextosPagina textosPagina = (TextosPagina) mapping.convertir(textosPaginaRequest, TextosPagina.class);
+				
+				response = textosPaginaService.altaTextosPagina(textosPagina);
+			}
+		}
+		catch (Exception ex)
+		{
+			ErrorResponse error = new ErrorResponse();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).entity(error).type("application/json")
+					.build();
+		}
+
+		return Response.status(Response.Status.OK.getStatusCode()).entity(response).type("application/json").build();
+	}
+
+	@POST
+	@Path("/bajaTextosPagina")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Da de baja los textos de una pagina en la BD", notes = "Da de baja los textos de una pagina en la BD.")
+	@ApiResponses(value =
+	{ @ApiResponse(code = 200, message = "OK", response = Object.class),
+			@ApiResponse(code = 500, message = "Error", response = ErrorResponse.class) })
+	public Response bajaTextosPagina(TextosPaginaRequest textosPaginaRequest) throws Exception
+	{
+		boolean response = false;
+
+		try
+		{
+			// Controlo que sea el administrador autenticado
+			if (administradorService.controlarAdministradorAutenticadoDesdeToken(textosPaginaRequest.getToken()))
+			{
+				TextosPagina textosPagina = (TextosPagina) mapping.convertir(textosPaginaRequest, TextosPagina.class);
+				
+				response = textosPaginaService.bajaTextosPagina(textosPagina);
+			}
+		}
+		catch (Exception ex)
+		{
+			ErrorResponse error = new ErrorResponse();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).entity(error).type("application/json")
+					.build();
+		}
+
+		return Response.status(Response.Status.OK.getStatusCode()).entity(response).type("application/json").build();
+	}
+
+	@POST
+	@Path("/modificarTextosPagina")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Modifica los textos de una pagina en la BD", notes = "Modifica los textos de una pagina en la BD.")
+	@ApiResponses(value =
+	{ @ApiResponse(code = 200, message = "OK", response = Object.class),
+			@ApiResponse(code = 500, message = "Error", response = ErrorResponse.class) })
+	public Response modificarTextosPagina(TextosPaginaRequest textosPaginaRequest) throws Exception
+	{
+		TextosPagina response = null;
+
+		try
+		{
+			// Controlo que sea el administrador autenticado
+			if (administradorService.controlarAdministradorAutenticadoDesdeToken(textosPaginaRequest.getToken()))
+			{
+				TextosPagina textosPagina = (TextosPagina) mapping.convertir(textosPaginaRequest, TextosPagina.class);
+				
+				response = textosPaginaService.modificarTextosPagina(textosPagina);
+			}
+		}
+		catch (Exception ex)
+		{
+			ErrorResponse error = new ErrorResponse();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).entity(error).type("application/json")
+					.build();
+		}
+
+		return Response.status(Response.Status.OK.getStatusCode()).entity(response).type("application/json").build();
+	}
 }

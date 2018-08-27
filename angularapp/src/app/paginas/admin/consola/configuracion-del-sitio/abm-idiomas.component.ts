@@ -30,7 +30,7 @@ export class ABMIdiomasComponent
         {
             case "alta": 
             { 
-                if (this.idiomaSeleccionado.abreviatura === "" || this.idiomaSeleccionado.nombre === "")
+                if (this.idiomaSeleccionado.abreviatura.trim() === "" || this.idiomaSeleccionado.nombre.trim() === "")
                 {
                     window.alert("Llena bien los campos, gil");
                 }
@@ -49,7 +49,14 @@ export class ABMIdiomasComponent
             }
             case "modificacion": 
             { 
-                this.idiomasService.modificarIdioma(this.idiomaSeleccionado).subscribe(resp => this.inicializarFormulario(resp));
+                if (this.idiomaSeleccionado.abreviatura.trim() === "" || this.idiomaSeleccionado.nombre.trim() === "")
+                {
+                    window.alert("Llena bien los campos, gil");
+                }
+                else
+                {
+                    this.idiomasService.modificarIdioma(this.idiomaSeleccionado).subscribe(resp => this.inicializarFormulario(resp));
+                }
                 
                 break; 
             }

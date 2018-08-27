@@ -6,6 +6,9 @@ public class DatosAuto
 	private String modelo;
 	private int anio;
 	private String color;
+	private String motor;
+	private int potencia;
+	private int ordenamiento;
 
 	public String getMarca()
 	{
@@ -46,4 +49,35 @@ public class DatosAuto
 	{
 		this.color = color;
 	}
+
+	public String getMotor()
+	{
+		return motor;
+	}
+
+	public void setMotor(String motor)
+	{
+		this.motor = motor;
+	}
+
+	public int getPotencia()
+	{
+		return potencia;
+	}
+
+	public void setPotencia(int potencia)
+	{
+		this.potencia = potencia;
+	}
+
+	public int getOrdenamiento()
+	{
+		return ordenamiento;
+	}
+
+	public void setOrdenamiento(int ordenamiento)
+	{
+		this.ordenamiento = ordenamiento;
+	}
+	
 }

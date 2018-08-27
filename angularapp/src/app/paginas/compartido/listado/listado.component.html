@@ -1,0 +1,43 @@
+<div *ngIf="isAdministrador">
+	<menu-admin></menu-admin>
+</div>
+<div *ngIf="!isAdministrador">
+	<header></header>
+</div>
+<div class="custom-container">
+	<mz-card
+		class="blue-grey darken-1 white-text"
+		[hoverable]="true">
+		<mz-card-title>{{ tituloPagina }}</mz-card-title>
+		<mz-card-content>
+			<div class="container">
+				<div class="container">
+			  		<mz-card *ngFor="let auto of autos"
+						class="cyan lighten-4 black-text"
+						[hoverable]="true">
+						<mz-card-content>
+							  	<div class="row valign-wrapper">
+							  		<div class="col s6">
+										<div class="valign-wrapper">
+										  <h5>{{ auto.datosAuto.anio + " " + auto.datosAuto.marca + " " + auto.datosAuto.modelo + " " + auto.datosAuto.motor}}</h5>
+										</div>
+							  		</div>
+							  		<div class="col s6 right-align">
+							  			<img width="359" height="200" src="{{ auto.urlFotos[0] }}" />
+							  		</div>
+							  	</div>
+						</mz-card-content>
+						<mz-card-action>
+							  	<div class="row">
+								  	<div class="col s12 center-align">
+										<a *ngIf="isAdministrador" class="deep-orange-text darken-4 pointer" (click)="irAReview(auto.urlRest)">Ir a ABM Auto</a>
+										<a *ngIf="!isAdministrador" class="deep-orange-text darken-4 pointer" (click)="irAReview(auto.urlRest)">{{ textosPagina && textosPagina['listado-texto-ver-review'] }}</a>
+									</div>
+								</div>
+						</mz-card-action>
+					</mz-card>
+				</div>
+			</div>
+		</mz-card-content>
+	</mz-card>
+</div>

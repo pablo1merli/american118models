@@ -1,9 +1,9 @@
-import { Component, DoCheck, KeyValueDiffers, OnDestroy} from '@angular/core';
+import { Component, DoCheck, KeyValueDiffers, OnDestroy } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Subscription } from 'rxjs';
 
 import { Idioma } from './../../../entidades/idioma';
 import { ManejoCookieIdiomaService } from './../../../servicios/manejo-cookie-idioma.service';
-import { TextoPagina } from './../../../entidades/texto-pagina';
 import { TextosPaginaService } from './../../../servicios/textos-pagina.service';
 
 
@@ -18,6 +18,7 @@ export class HomePageComponent implements DoCheck, OnDestroy
     textosPagina: Object;
     subscripcion: Subscription;
     diferencia: any;
+    tituloPagina: string;
 
     constructor(private manejoCookieIdiomaService: ManejoCookieIdiomaService, private textosPaginaService: TextosPaginaService, private differs: KeyValueDiffers) 
     {
@@ -33,6 +34,11 @@ export class HomePageComponent implements DoCheck, OnDestroy
         if (huboCambios)
         {
             this.textosPaginaService.getTextosDeLaPaginaSegunIdioma(this.pagina, this.idiomaSeleccionado.abreviatura).subscribe(textos => this.textosPagina = textos);
+        }
+        
+        if (this.textosPagina != undefined)
+        {
+            this.tituloPagina = this.textosPagina['homepage-titulo'];
         }
     }
 

@@ -11,8 +11,10 @@ public class Auto
 
 	private DatosAuto datosAuto;
 	private boolean loTengo;
-	private boolean hiceReview;
 	private String fabricante;
+	private String serie;
+	private int cantidadProducida;
+	private String edicionEspecial;
 	private int anioFabricacion;
 	private String urlRest;
 	private List<Review> reviews;
@@ -48,16 +50,6 @@ public class Auto
 		this.loTengo = loTengo;
 	}
 
-	public boolean isHiceReview()
-	{
-		return hiceReview;
-	}
-
-	public void setHiceReview(boolean hiceReview)
-	{
-		this.hiceReview = hiceReview;
-	}
-
 	public String getFabricante()
 	{
 		return fabricante;
@@ -66,6 +58,36 @@ public class Auto
 	public void setFabricante(String fabricante)
 	{
 		this.fabricante = fabricante;
+	}
+
+	public String getSerie()
+	{
+		return serie;
+	}
+
+	public void setSerie(String serie)
+	{
+		this.serie = serie;
+	}
+
+	public int getCantidadProducida()
+	{
+		return cantidadProducida;
+	}
+
+	public void setCantidadProducida(int cantidadProducida)
+	{
+		this.cantidadProducida = cantidadProducida;
+	}
+
+	public String getEdicionEspecial()
+	{
+		return edicionEspecial;
+	}
+
+	public void setEdicionEspecial(String edicionEspecial)
+	{
+		this.edicionEspecial = edicionEspecial;
 	}
 
 	public int getAnioFabricacion()

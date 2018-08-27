@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <custom-converters>
+			<!-- DESDE REQUEST A MODELO -->
+            <converter type="ar.com.american118models.mapping.converters.desdeRequestAModelo.DesdeRequestAModeloConverter">
+                <class-a>ar.com.american118models.rest.request.AutoRequest</class-a>
+                <class-b>ar.com.american118models.modelo.entidades.autos.Auto</class-b>
+            </converter>
+            <converter type="ar.com.american118models.mapping.converters.desdeRequestAModelo.DesdeRequestAModeloConverter">
+                <class-a>ar.com.american118models.rest.request.IdiomaRequest</class-a>
+                <class-b>ar.com.american118models.modelo.entidades.idiomas.Idioma</class-b>
+            </converter>
+            <converter type="ar.com.american118models.mapping.converters.desdeRequestAModelo.DesdeRequestAModeloConverter">
+                <class-a>ar.com.american118models.rest.request.TextosPaginaRequest</class-a>
+                <class-b>ar.com.american118models.modelo.entidades.paginas.TextosPagina</class-b>
+            </converter>
+			<!-- FIN DESDE REQUEST A MODELO -->
+
+			<!-- DESDE MODELO A RESPONSE -->
+            <converter type="ar.com.american118models.mapping.converters.desdeModeloAResponse.DesdeModeloAResponseConverter">
+                <class-a>ar.com.american118models.modelo.entidades.autos.Auto</class-a>
+                <class-b>ar.com.american118models.rest.response.IdiomaResponse</class-b>
+            </converter>
+            <converter type="ar.com.american118models.mapping.converters.desdeModeloAResponse.DesdeModeloAResponseConverter">
+                <class-a>ar.com.american118models.modelo.entidades.idiomas.Idioma</class-a>
+                <class-b>ar.com.american118models.rest.response.IdiomaResponse</class-b>
+            </converter>
+            <converter type="ar.com.american118models.mapping.converters.desdeModeloAResponse.DesdeModeloAResponseConverter">
+                <class-a>ar.com.american118models.modelo.entidades.paginas.TextosPagina</class-a>
+                <class-b>ar.com.american118models.rest.response.DatosAutoResponse</class-b>
+            </converter>
+			<!-- DESDE MODELO A RESPONSE -->
+        </custom-converters>
+    </configuration>
+</mappings>

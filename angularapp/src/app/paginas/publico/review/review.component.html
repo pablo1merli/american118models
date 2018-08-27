@@ -1,0 +1,36 @@
+<header></header>
+<div class="custom-container">
+	<mz-card
+		class="blue-grey darken-1 white-text"
+		[hoverable]="true">
+		<mz-card-title>{{ tituloPagina }}</mz-card-title>
+		<mz-card-content>
+			<div class="custom-container">
+				<div class="center-align">
+					<h5>{{ autoSeleccionado.datosAuto.anio }}&nbsp;{{ autoSeleccionado.datosAuto.marca }}&nbsp;{{ autoSeleccionado.datosAuto.modelo }}&nbsp;{{ autoSeleccionado.datosAuto.motor }}</h5>
+				</div>
+				<div>
+					<h6><b>{{ textosPagina && textosPagina['datosAuto'] }}</b></h6>
+					<h6>{{ textosPagina && textosPagina['marca'] }}: {{ autoSeleccionado.datosAuto.marca }}</h6>
+					<h6>{{ textosPagina && textosPagina['modelo'] }}: {{ autoSeleccionado.datosAuto.modelo }}</h6>
+					<h6>{{ textosPagina && textosPagina['anio'] }}: {{ autoSeleccionado.datosAuto.anio }}</h6>
+					<h6>{{ textosPagina && textosPagina['motor'] }}: {{ autoSeleccionado.datosAuto.motor }} - {{ autoSeleccionado.datosAuto.potencia }}HP</h6>
+					<h6>{{ textosPagina && textosPagina['color'] }}: {{ autoSeleccionado.datosAuto.color }}</h6>
+					<br />
+					<h6><b>{{ textosPagina && textosPagina['datosModelo'] }}</b></h6>
+					<h6>{{ textosPagina && textosPagina['fabricante'] }}: {{ autoSeleccionado.fabricante }}</h6>
+					<h6>{{ textosPagina && textosPagina['serie'] }}: {{ autoSeleccionado.serie }}</h6>
+					<h6>{{ textosPagina && textosPagina['cantidadProducida'] }}: {{ autoSeleccionado.cantidadProducida }}</h6>
+					<h6>{{ textosPagina && textosPagina['anioFabricacion'] }}: {{ autoSeleccionado.anioFabricacion }}</h6>
+					<h6 *ngIf="autoSeleccionado.edicionEspecial">{{ textosPagina && textosPagina['edicionEspecial'] }}: {{ autoSeleccionado.edicionEspecial }}</h6>
+				</div>
+				<br />
+				<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+				<br />
+				<h6 *ngIf="autoSeleccionado.reviews">{{ reviewSegunIdioma.review }}</h6>
+				<br />
+				<h6 *ngIf="autoSeleccionado.reviews">{{ reviewSegunIdioma.fecha }}</h6>
+			</div>
+		</mz-card-content>
+	</mz-card>
+</div>

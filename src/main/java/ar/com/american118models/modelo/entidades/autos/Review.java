@@ -1,9 +1,12 @@
 package ar.com.american118models.modelo.entidades.autos;
 
+import org.joda.time.LocalDate;
+
 public class Review
 {
 	private String idioma;
 	private String review;
+	private LocalDate fecha;
 
 	public String getIdioma()
 	{
@@ -23,5 +26,15 @@ public class Review
 	public void setReview(String review)
 	{
 		this.review = review;
+	}
+
+	public LocalDate getFecha()
+	{
+		return fecha;
+	}
+
+	public void setFecha(LocalDate fecha)
+	{
+		this.fecha = fecha;
 	}
 }

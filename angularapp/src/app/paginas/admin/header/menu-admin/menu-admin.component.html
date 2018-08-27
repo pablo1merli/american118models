@@ -18,11 +18,16 @@
 			  [outDuration]="300"
 			  [stopPropagation]="true"
 			>
+				<mz-dropdown-item><a (click)="irAABMAutos()">Autos</a></mz-dropdown-item>
+				<mz-dropdown-divider></mz-dropdown-divider>
 				<mz-dropdown-item><a (click)="irAABMIdiomas()">Idiomas</a></mz-dropdown-item>
 				<mz-dropdown-divider></mz-dropdown-divider>
 			  	<mz-dropdown-item><a (click)="irAABMTextosPagina()">Textos de p&aacute;ginas</a></mz-dropdown-item>
 			</mz-dropdown>
 			<button mz-button id="menuIdiomas">Configuraci&oacute;n del sitio</button>
+		</mz-navbar-item>
+			<button mz-button (click)="irAListadoCompleto()">Listado completo</button>
+		<mz-navbar-item>
 		</mz-navbar-item>
 	</mz-navbar-item-container>
 </mz-navbar>

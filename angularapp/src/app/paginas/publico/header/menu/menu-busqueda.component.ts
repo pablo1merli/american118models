@@ -1,4 +1,5 @@
 import { Component, DoCheck, KeyValueDiffers, OnDestroy} from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 
@@ -12,7 +13,7 @@ import { TextosPaginaService } from './../../../../servicios/textos-pagina.servi
     selector: 'menu-busqueda',
     templateUrl: './menu-busqueda.component.html',
 } )
-export class MenuBusquedaComponent implements /*OnChanges,*/ DoCheck, OnDestroy/*, OnInit */ 
+export class MenuBusquedaComponent implements  DoCheck, OnDestroy
 {
     private pagina = 'menu-busqueda.component.html';
     idiomaSeleccionado: Idioma = {abreviatura: "", nombre: "", token: ""};
@@ -20,13 +21,18 @@ export class MenuBusquedaComponent implements /*OnChanges,*/ DoCheck, OnDestroy/
     subscripcion: Subscription;
     diferencia: any;
 
-    constructor(private manejoCookieIdiomaService: ManejoCookieIdiomaService, private textosPaginaService: TextosPaginaService, private differs: KeyValueDiffers) 
+    constructor(private manejoCookieIdiomaService: ManejoCookieIdiomaService, private textosPaginaService: TextosPaginaService, private differs: KeyValueDiffers, private router: Router) 
     {
         this.diferencia = differs.find({}).create();
         this.idiomaSeleccionado.abreviatura = manejoCookieIdiomaService.getValorCookieIdioma();
         this.subscripcion = this.manejoCookieIdiomaService.obtenerValorPropagadoDeCookieIdioma().subscribe(abreviatura => this.idiomaSeleccionado.abreviatura = abreviatura);
     }
     
+    irAListado()
+    {
+        this.router.navigate( ['/listado'] );
+    }
+
     ngDoCheck()
     {
         let huboCambios = this.diferencia.diff(this.idiomaSeleccionado);
