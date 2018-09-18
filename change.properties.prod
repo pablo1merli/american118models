@@ -1,2 +1,3 @@
-angular.url.ambiente=wildfly-american118models.a3c1.starter-us-west-1.openshiftapps.com
+angular.url.ambiente=american118models-american118models.193b.starter-ca-central-1.openshiftapps.com
+base.root.index=/
 mongodb.host=mongodb.american118models.svc

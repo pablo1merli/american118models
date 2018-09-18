@@ -1,2 +1,3 @@
 angular.url.ambiente=localhost:8080
+base.root.index=/american118models/angularapp/
 mongodb.host=localhost

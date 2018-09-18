@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import ar.com.american118models.mapping.ObjectMapping;
 import ar.com.american118models.modelo.entidades.paginas.TextosPagina;
@@ -27,6 +28,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @Path("rest/textosPagina/")
 @Api(value = "american118models-api")
